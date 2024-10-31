@@ -3,6 +3,7 @@ package com.example.demo.controllers
 import com.example.demo.controllers.models.CreateUserInput
 import com.example.demo.services.CustomService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -28,5 +29,13 @@ class Controller(private val service: CustomService) {
     ): ResponseEntity<*> {
         val user = service.getUserById(uid)
         return ResponseEntity.status(200).body(user)
+    }
+
+    @DeleteMapping("/rest/users/{uid}")
+    fun deleteUser(
+        @PathVariable uid: String
+    ): ResponseEntity<String> {
+        service.deleteUserById(uid)
+        return ResponseEntity.status(200).body("User deleted successfully")
     }
 }

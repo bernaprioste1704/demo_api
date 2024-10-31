@@ -34,4 +34,15 @@ class CustomService(@Autowired val repo: CustomRepository) {
         )
     }
 
+    fun deleteUserById(uid: String): UserOutput {
+        val user = repo.findById(uid).orElseThrow {
+            NoSuchElementException("User with ID $uid not found")
+        }
+        repo.deleteById(user.id)
+        return UserOutput(
+            id = user.id,
+            name = user.name
+        )
+    }
+
 }
